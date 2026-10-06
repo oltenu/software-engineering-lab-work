@@ -5,7 +5,7 @@ import java.util.Locale;
 
 public class OrderProcessor {
     public void process(String email, List<Double> prices,
-                        String customerType, String paymentMethod) {
+                        DiscountPolicy discountPolicy,PaymentMethod paymentMethod) {
         OrderValidator validator = new OrderValidator();
         PriceCalculator calculator = new PriceCalculator();
         PaymentProcessor payment = new PaymentProcessor();
@@ -13,7 +13,7 @@ public class OrderProcessor {
         Notifier notifier = new Notifier();
 
         validator.validate(email, prices);
-        double total = calculator.calculate(prices, customerType);
+        double total = calculator.calculate(prices, discountPolicy);
         payment.pay(total, paymentMethod);
         repository.save(email, total);
         notifier.send(email, total);
@@ -23,8 +23,8 @@ public class OrderProcessor {
         new OrderProcessor().process(
                 "ana@student.utcluj.ro",
                 List.of(100.0, 50.0),
-                "STUDENT",
-                "CARD"
+                new StudentDiscount(),
+                new CardPayment()
         );
     }
 }
