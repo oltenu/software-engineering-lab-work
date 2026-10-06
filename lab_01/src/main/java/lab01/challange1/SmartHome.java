@@ -3,6 +3,14 @@ package lab01.challange1;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+Principiile OOP:
+
+Abstractizare - clasa abstracta Device si metodele abstracte powerUsage() si status()
+Incapsulare - campurile sunt private si sunt modificate prin metode care verifica daca valorile sunt valide
+Mostenire - clasele Light, Thermostat, SecurityCamera si SmartPlug mostenesc clasa Device
+Polimorfism - SmartHome foloseste o lista List<Device>, iar metodele powerUsage(), status() si turnOff() sunt apelate pentru obiecte de tip Device
+ */
 public class SmartHome {
     private final List<Device> devices = new ArrayList<>();
 
