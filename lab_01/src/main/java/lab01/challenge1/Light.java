@@ -11,6 +11,8 @@ public class Light extends Device{
 
     @Override
     public double powerUsage(){
+        if(!getState())
+            return 0;
         return brightness*0.1;
     }
 

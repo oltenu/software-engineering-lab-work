@@ -12,6 +12,8 @@ public class Thermostat extends Device{
 
     @Override
     public double powerUsage(){
+        if(!getState())
+            return 0;
         return 50;
     }
 

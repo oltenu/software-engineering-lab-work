@@ -10,6 +10,8 @@ public class SecurityCamera extends Device{
 
     @Override
     public double powerUsage(){
+        if(!getState())
+            return 0;
         if(recording)
             return 8;
         else
