@@ -43,5 +43,9 @@ public class SecurityCamera extends Device{
         setState("off");
         this.recording = false;
     }
+    @Override
+    public String status(){
+        return "Security camera "+getName() + " is " + getState() + " and it is "+ (isRecording()? "recording" : "not recording");
+    }
 
 }

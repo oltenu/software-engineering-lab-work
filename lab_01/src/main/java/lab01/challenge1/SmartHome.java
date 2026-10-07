@@ -13,7 +13,7 @@ import java.util.List;
 public class SmartHome {
     private ArrayList<Device> devices;
 
-    public SmartHome(){ }
+    public SmartHome(){     devices = new ArrayList<>();    }
     public SmartHome(ArrayList<Device> l)
     {
         devices = l;
@@ -49,7 +49,7 @@ public class SmartHome {
     {
         for(Device d: devices)
         {
-            System.out.println(d.getName() + " is "+ d.getState());
+            System.out.println(d.status());
         }
     }
 

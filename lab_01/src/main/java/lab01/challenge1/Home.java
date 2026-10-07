@@ -1,8 +1,7 @@
 package lab01.challenge1;
 
-public class Home{
-    public void run()
-    {
+public class Home {
+    public static void run() {
         SmartHome h = new SmartHome();
         Light led1 = new Light("Bedroom light", "on", 78);
         Light led2 = new Light("Bathroom light", "off", 20);
@@ -16,21 +15,21 @@ public class Home{
 
         h.printStatus();
         double power = h.totalPowerUsage();
-        System.out.println("Total power usage:"+ power );
+        System.out.println("Total power usage:" + power);
         System.out.println(" ");
 
         h.turnEverythingOff();
         h.printStatus();
         power = h.totalPowerUsage();
-        System.out.println("Total power usage:"+ power );
+        System.out.println("Total power usage:" + power);
 
-        try{
-            led2.setName("on");
+        try {
+            led2.setState("on");
             led2.setBrightness(150);
-        }catch (IllegalArgumentException e)
-        {
+        } catch (IllegalArgumentException e) {
             led2.setBrightness(100);
             System.out.println("100 is the maximum brightness!");
         }
 
     }
+}

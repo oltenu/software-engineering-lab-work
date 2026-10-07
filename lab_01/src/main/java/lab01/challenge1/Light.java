@@ -11,14 +11,18 @@ public class Light extends Device{
     public Light(String name, String status, int brightness)
     {
         super(name, status);
-        this.brightness = brightness;
+        if(status.compareTo("on")==0)
+            this.brightness = brightness;
+        else
+            this.brightness = 50;
     }
 
     public int getBrightness(){ return this.brightness; }
     public void setBrightness(int x) throws IllegalArgumentException
     {   if(x>100 || x<0)
-            throw new IllegalArgumentException("Brightness should be between 0 and 100.")
-        this.brightness = x;
+            throw new IllegalArgumentException("Brightness should be between 0 and 100.");
+        else if(getState().compareTo("on")==0)
+            this.brightness = x;
     }
 
     @Override
@@ -29,4 +33,9 @@ public class Light extends Device{
             return (double)brightness * 0.1;
     }
 
+    @Override
+    public String status()
+    {
+        return getName() + " is " + getState() + " and the brightness is " + getBrightness();
+    }
 }

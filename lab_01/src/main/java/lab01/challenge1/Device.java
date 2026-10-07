@@ -9,16 +9,16 @@ public abstract class Device {
         name = "-";
         state = "off";
     }
+    public Device(String name)
+    {
+        this.name = name;
+        state = "off";
+    }
 
     public Device(String name, String state)
     {
         this.name = name;
         this.state = state;
-    }
-
-    public Device(String name)
-    {
-        this.name = name;
     }
 
     public String getName()
@@ -50,7 +50,7 @@ public abstract class Device {
         state = "off";
     }
     public abstract double powerUsage();
-    //public abstract String status();
+    public abstract String status();
 
 }
 

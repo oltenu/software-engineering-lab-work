@@ -30,5 +30,10 @@ public class Thermostat extends Device{
             return 0;
         return 50;
     }
+    @Override
+    public String status()
+    {
+        return "Thermostate " + getName() + " is " + getState() + " and the temperature is set to "+getTemperature();
+    }
 
 }
