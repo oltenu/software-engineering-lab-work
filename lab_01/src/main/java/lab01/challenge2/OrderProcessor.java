@@ -4,7 +4,7 @@ import java.util.List;
 
 public class OrderProcessor {
     public void process(String email, List<Double> prices,
-                        Customer customerType, String paymentMethod) {
+                        Customer customerType, PayingMethod paymentMethod) {
         // 1. validate
         try {
             DataValidator.validate(email, prices);
@@ -31,7 +31,9 @@ public class OrderProcessor {
 
     public static void run() {
         new OrderProcessor().process("ana@student.utcluj.ro",
-                List.of(100.0, 50.0), new Student(), "CARD");
+                List.of(100.0, 50.0), new Student(), new Card());
+        new OrderProcessor().process("Ilie.moromete@gmail.com",
+                List.of(6.9, 6.7, 42.0), new Employee(), new Bank());
     }
 }
 
