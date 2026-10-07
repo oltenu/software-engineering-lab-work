@@ -4,7 +4,7 @@ import java.util.List;
 
 public class OrderProcessor {
     public void process(String email, List<Double> prices,
-                        String customerType, String paymentMethod) {
+                        Customer customerType, String paymentMethod) {
         // 1. validate
         try {
             DataValidator.validate(email, prices);
@@ -31,19 +31,17 @@ public class OrderProcessor {
 
     public static void run() {
         new OrderProcessor().process("ana@student.utcluj.ro",
-                List.of(100.0, 50.0), "STUDENT", "CARD");
+                List.of(100.0, 50.0), new Student(), "CARD");
     }
 }
 
 class PaymentHandler {
-    static void pay(String paymentMethod, double total) {
-        if (paymentMethod.equals("CARD")) {
-            System.out.println("Charging " + total + " RON to the card");
-        } else if (paymentMethod.equals("PAYPAL")) {
-            System.out.println("Paying " + total + " RON with PayPal");
-        } else {
+    static void pay(PayingMethod paymentMethod, double total) {
+        if (paymentMethod == null) {
             throw new IllegalArgumentException("Unknown payment");
         }
+
+        paymentMethod.printPaymentConfirm(total);
     }
 }
 
@@ -60,14 +58,11 @@ class DataValidator {
 
 class PriceCalculator {
 
-    static double calculateTotal(List<Double> prices, String customerType) {
+    static double calculateTotal(List<Double> prices, Customer customerType) {
         double total = 0;
         for (double price : prices) total += price;
-        if (customerType.equals("STUDENT")) {
-            total = total * 0.8;
-        } else if (customerType.equals("VIP")) {
-            total = total * 0.7;
-        }
+
+        total = customerType.applyDiscount(total);
 
         return total;
     }
