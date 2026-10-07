@@ -3,6 +3,14 @@ package lab01.challenge2;
 import java.util.List;
 
 public class OrderProcessor {
+    private OrderRepository repository;
+    private Notifier notifier;
+
+    OrderProcessor(OrderRepository repository, Notifier notifier) {
+        this.repository = repository;
+        this.notifier = notifier;
+    }
+
     public void process(String email, List<Double> prices,
                         Customer customerType, PayingMethod paymentMethod) {
         // 1. validate
@@ -23,16 +31,19 @@ public class OrderProcessor {
         }
 
         // 4. save, then 5. notify the customer
-        new FileDatabase().save(email + ";" + total);
-        new EmailSender().send(email, "Order of " + total + " RON placed");
+        repository.save(email + ";" + total);
+        notifier.send(email, "Order of " + total + " RON placed");
 
 
     }
 
     public static void run() {
-        new OrderProcessor().process("ana@student.utcluj.ro",
+        OrderRepository repository = new FileDatabase();
+        Notifier notifier = new EmailSender();
+
+        new OrderProcessor(repository, notifier).process("ana@student.utcluj.ro",
                 List.of(100.0, 50.0), new Student(), new Card());
-        new OrderProcessor().process("Ilie.moromete@gmail.com",
+        new OrderProcessor(repository, notifier).process("Ilie.moromete@gmail.com",
                 List.of(6.9, 6.7, 42.0), new Employee(), new Bank());
     }
 }
@@ -70,13 +81,24 @@ class PriceCalculator {
     }
 
 }
-
-class FileDatabase {
-    void save(String line) { System.out.println("[file] " + line); }
+interface OrderRepository {
+    void save(String line);
 }
 
-class EmailSender {
-    void send(String to, String text) {
+interface Notifier {
+    void send(String to, String text);
+}
+
+class FileDatabase implements OrderRepository {
+    @Override
+    public void save(String line) {
+        System.out.println("[file] " + line);
+    }
+}
+
+class EmailSender implements Notifier {
+    @Override
+    public void send(String to, String text) {
         System.out.println("[email] " + to + ": " + text);
     }
 }
