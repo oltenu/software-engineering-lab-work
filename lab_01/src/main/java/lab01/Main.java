@@ -1,8 +1,9 @@
 package lab01;
 
-public class Main {
+import lab01.challenge1.SmartHome;
 
+public class Main {
     public static void main(String[] args) {
-        // TODO: run your challenges here (see lab_00 for an example)
+        SmartHome.run();
     }
 }
